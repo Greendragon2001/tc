@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Trading Cards Carousel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000, #000000);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: absolute;
+            width: 900px;
+        }
+
+        .carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 800px;
+            height: 550px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-container {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            border: 3px solid white; /* White outline */
+            width: 401px; /* Adjust based on actual image width */
+            height: 511px; /* Adjust based on actual image height */
+            image-rendering: crisp-edges; /* Helps with pixelated images */
+            image-rendering: -webkit-optimize-contrast;
+        }
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .carousel {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card .card-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        .card .card-front,
+        .card .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .card .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card.center {
+            transform: scale(1);
+            z-index: 2;
+            opacity: 1;
+        }
+
+        .card.left, .card.right {
+            transform: scale(0.8);
+            opacity: 0.5;
+            filter: blur(5px);
+            z-index: 1;
+        }
+
+        .card.left {
+            left: -180px;
+        }
+
+        .card.right {
+            right: -180px;
+        }
+
+        .nav-button {
+            padding: 15px;
+            font-size: 20px;
+            background: rgb(0, 0, 0);
+            color: black;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .nav-button:hover {
+            background: lightgray;
+        }
+
+        .opgg-container {
+            margin-top: 600px;
+            font-size: 18px;
+        }
+
+        .opgg-container a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        .opgg-container a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <button class="nav-button" onclick="prevPlayer()">⬅️</button>
+
+        <div class="carousel">
+                <div class="card left" id="leftCard">
+                    <div class="card-inner">
+                        <div class="card-front"></div>
+                        <div class="card-back"></div>
+                    </div>
+                </div>
+            <div class="card-container">
+                <div class="card center" id="centerCard" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front"></div>
+                        <div class="card-back"></div>
+                    </div>
+                </div>
+            </div>
+                <div class="card right" id="rightCard">
+                    <div class="card-inner">
+                        <div class="card-front"></div>
+                        <div class="card-back"></div>
+                    </div>
+                </div>
+        </div>
+
+        <button class="nav-button" onclick="nextPlayer()">➡️</button>
+    </div>
+    <div class="opgg-container">
+        OP.gg: <a id="opggLink" href="#" target="_blank">Click here</a>
+    </div>
+
+
+    <script>
+        // List of players with front and back images
+        const players = [
+            { front: "AndreusFR.jpg", back: 'AndreusB.jpg', opgg: "https://www.op.gg/summoners/na/Andreus417-NA1" },
+            { front: 'SpectorasF.jpg', back: 'SpectorasB.jpg', opgg: "https://www.op.gg/summoners/na/Spectoras-SPECS?queue_type=TOTAL"},
+            { front: 'BotzimF.jpg', back: 'BotzimB.jpg', opgg: "https://www.op.gg/summoners/na/BOTZIM-DDYWW" },
+            { front: 'BoldronnF.jpg', back: 'BoldronnB.jpg', opgg: "https://www.op.gg/summoners/na/Boldronn-NA1" },
+            { front: 'MeepF.jpg', back: 'MeepB.jpg', opgg: "https://www.op.gg/summoners/na/meep-NA7" },
+            { front: 'VoodudeF.jpg', back: 'VoodudeB.jpg', opgg: "https://www.op.gg/summoners/na/voodude-NA1" },
+            { front: 'HeroF.jpg', back: 'HeroB.jpg', opgg: "https://www.op.gg/summoners/na/Herokku-DRAV" },
+            { front: 'Greendragon2001F.jpg', back: 'Greendragon2001B.jpg', opgg: "https://www.op.gg/summoners/na/Greendragon2001-NA1" },
+            { front: 'VictorF.jpg', back: 'VictorB.jpg', opgg: "N/A" },
+            { front: 'DJF.jpg', back: 'DJB.jpg', opgg: "https://www.op.gg/summoners/na/Lord%20Drayplay-NA1" }
+        ];
+
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            const leftIndex = (currentIndex - 1 + players.length) % players.length;
+            const rightIndex = (currentIndex + 1) % players.length;
+
+            const leftCard = document.getElementById("leftCard");
+            const centerCard = document.getElementById("centerCard");
+            const rightCard = document.getElementById("rightCard");
+            document.getElementById("opggLink").href = players[currentIndex].opgg;
+            document.getElementById("opggLink").innerText = players[currentIndex].opgg;
+
+            leftCard.classList.remove("flipped");
+            centerCard.classList.remove("flipped");
+            rightCard.classList.remove("flipped");
+
+            leftCard.querySelector(".card-front").style.backgroundImage = `url(/static/${players[leftIndex].front})`;
+            leftCard.querySelector(".card-back").style.backgroundImage = `url(/static/${players[leftIndex].back})`;
+
+            centerCard.querySelector(".card-front").style.backgroundImage = `url(/static/${players[currentIndex].front})`;
+            centerCard.querySelector(".card-back").style.backgroundImage = `url(/static/${players[currentIndex].back})`;
+
+            rightCard.querySelector(".card-front").style.backgroundImage = `url(/static/${players[rightIndex].front})`;
+            rightCard.querySelector(".card-back").style.backgroundImage = `url(/static/${players[rightIndex].back})`;
+        }
+
+        function nextPlayer() {
+            currentIndex = (currentIndex + 1) % players.length;
+            updateCarousel();
+        }
+
+        function prevPlayer() {
+            currentIndex = (currentIndex - 1 + players.length) % players.length;
+            updateCarousel();
+        }
+
+        function flipCard(card) {
+            card.classList.toggle("flipped");
+        }
+
+        updateCarousel();
+    </script>
+</body>
+</html>
+
