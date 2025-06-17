@@ -177,16 +177,56 @@
     <script>
         // List of players with front and back images
         const players = [
-            { front: "AndreusFR.jpg", back: 'AndreusB.jpg', opgg: "https://www.op.gg/summoners/na/Andreus417-NA1" },
-            { front: 'SpectorasF.jpg', back: 'SpectorasB.jpg', opgg: "https://www.op.gg/summoners/na/Spectoras-SPECS?queue_type=TOTAL"},
-            { front: 'BotzimF.jpg', back: 'BotzimB.jpg', opgg: "https://www.op.gg/summoners/na/BOTZIM-DDYWW" },
-            { front: 'BoldronnF.jpg', back: 'BoldronnB.jpg', opgg: "https://www.op.gg/summoners/na/Boldronn-NA1" },
-            { front: 'MeepF.jpg', back: 'MeepB.jpg', opgg: "https://www.op.gg/summoners/na/meep-NA7" },
-            { front: 'VoodudeF.jpg', back: 'VoodudeB.jpg', opgg: "https://www.op.gg/summoners/na/voodude-NA1" },
-            { front: 'HeroF.jpg', back: 'HeroB.jpg', opgg: "https://www.op.gg/summoners/na/Herokku-DRAV" },
-            { front: 'Greendragon2001F.jpg', back: 'Greendragon2001B.jpg', opgg: "https://www.op.gg/summoners/na/Greendragon2001-NA1" },
-            { front: 'VictorF.jpg', back: 'VictorB.jpg', opgg: "N/A" },
-            { front: 'DJF.jpg', back: 'DJB.jpg', opgg: "https://www.op.gg/summoners/na/Lord%20Drayplay-NA1" }
+          {
+            front: "https://greendragon2001.github.io/tc/static/AndreusFR.jpg",
+            back: "https://greendragon2001.github.io/tc/static/AndreusB.jpg",
+            opgg: "https://www.op.gg/summoners/na/Andreus417-NA1"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/SpectorasF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/SpectorasB.jpg",
+            opgg: "https://www.op.gg/summoners/na/Spectoras-SPECS?queue_type=TOTAL"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/BotzimF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/BotzimB.jpg",
+            opgg: "https://www.op.gg/summoners/na/BOTZIM-DDYWW"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/BoldronnF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/BoldronnB.jpg",
+            opgg: "https://www.op.gg/summoners/na/Boldronn-NA1"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/MeepF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/MeepB.jpg",
+            opgg: "https://www.op.gg/summoners/na/meep-NA7"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/VoodudeF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/VoodudeB.jpg",
+            opgg: "https://www.op.gg/summoners/na/voodude-NA1"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/HeroF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/HeroB.jpg",
+            opgg: "https://www.op.gg/summoners/na/Herokku-DRAV"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/Greendragon2001F.jpg",
+            back: "https://greendragon2001.github.io/tc/static/Greendragon2001B.jpg",
+            opgg: "https://www.op.gg/summoners/na/Greendragon2001-NA1"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/VictorF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/VictorB.jpg",
+            opgg: "N/A"
+          },
+          {
+            front: "https://greendragon2001.github.io/tc/static/DJF.jpg",
+            back: "https://greendragon2001.github.io/tc/static/DJB.jpg",
+            opgg: "https://www.op.gg/summoners/na/Lord%20Drayplay-NA1"
+          }
         ];
 
         let currentIndex = 0;
@@ -205,14 +245,14 @@
             centerCard.classList.remove("flipped");
             rightCard.classList.remove("flipped");
 
-            leftCard.querySelector(".card-front").style.backgroundImage = `url(/static/${players[leftIndex].front})`;
-            leftCard.querySelector(".card-back").style.backgroundImage = `url(/static/${players[leftIndex].back})`;
+            leftCard.querySelector(".card-front").style.backgroundImage = `url('${players[leftIndex].front}')`;
+            leftCard.querySelector(".card-back").style.backgroundImage = `url('${players[leftIndex].back}')`;
 
-            centerCard.querySelector(".card-front").style.backgroundImage = `url(/static/${players[currentIndex].front})`;
-            centerCard.querySelector(".card-back").style.backgroundImage = `url(/static/${players[currentIndex].back})`;
+            centerCard.querySelector(".card-front").style.backgroundImage = `url('${players[currentIndex].front}')`;
+            centerCard.querySelector(".card-back").style.backgroundImage = `url('${players[currentIndex].back}')`;
 
-            rightCard.querySelector(".card-front").style.backgroundImage = `url(/static/${players[rightIndex].front})`;
-            rightCard.querySelector(".card-back").style.backgroundImage = `url(/static/${players[rightIndex].back})`;
+            rightCard.querySelector(".card-front").style.backgroundImage = `url('${players[rightIndex].front}')`;
+            rightCard.querySelector(".card-back").style.backgroundImage = `url('${players[rightIndex].back}')`;
         }
 
         function nextPlayer() {
